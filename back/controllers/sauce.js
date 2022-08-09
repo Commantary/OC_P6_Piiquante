@@ -1,5 +1,4 @@
 const Sauce = require('../models/sauce-schema');
-const File = require('../models/file-schema');
 const fs = require("fs");
 
 /**
@@ -97,7 +96,7 @@ const updateSauce = (req, res, next) => {
             imageUrl: saveImage(req, req.files.image, sauceData.name)
          }, {new: true})
             .then(sauce => {
-               res.status(200).json({ message: "Sauce updated" });
+               res.status(200).json({message: "Sauce updated"});
             })
             .catch(error => {
                handleError(error, res);
@@ -107,7 +106,7 @@ const updateSauce = (req, res, next) => {
             ...req.body,
          }, {new: true})
             .then(sauce => {
-               res.status(200).json({ message: "Sauce updated" });
+               res.status(200).json({message: "Sauce updated"});
             })
             .catch(error => {
                handleError(error, res);

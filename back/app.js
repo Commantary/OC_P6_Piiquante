@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const formData = require('express-form-data');
-const multer = require('multer');
 
 const saucesRoutes = require('./routes/sauce');
 const usersRoutes = require('./routes/user');
@@ -17,6 +16,7 @@ const apiLimiter = rateLimit({
 })
 
 const app = express();
+
 app.use(formData.parse());
 
 app.use((req, res, next) => {
@@ -29,11 +29,10 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.static('images'));
 
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use('/api/auth', usersRoutes, apiLimiter);
-app.use('/api/sauces', saucesRoutes, apiLimiter, auth);
+app.use('/api/auth', apiLimiter, usersRoutes);
+app.use('/api/sauces', apiLimiter, auth, saucesRoutes);
 
 module.exports = app;
