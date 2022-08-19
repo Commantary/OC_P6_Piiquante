@@ -9,14 +9,14 @@ const {
    createSauce,
    updateSauce,
    deleteSauce,
-   updateSauceLikes
+   updateSauceLike
 } = require('../controllers/sauce');
 
 router.route('/').get(getAllSauces);
 router.route('/:id').get(getSauceById);
+router.route('/:id/like').post(updateSauceLike);
 router.route('/:id').delete(author, deleteSauce);
-router.route('/:id/like').post(updateSauceLikes);
-router.route('/').post(fileType, createSauce); // here we save an image
 router.route('/:id').put(author, fileType, updateSauce); // Here we can save an image
+router.route('/').post(fileType, createSauce); // here we save an image
 
 module.exports = router;
