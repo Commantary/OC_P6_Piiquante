@@ -18,4 +18,8 @@ const saveImage = (req, image, name) => {
    return require("../utils/saveImage").saveImage(req, image, name);
 }
 
-module.exports = { handleError, saveImage };
+const validateSauceData = (res, name, manufacturer, description, mainPepper, heat, req) => {
+   return require("../utils/validateSauceData").validateSauceData(res, name, manufacturer, description, mainPepper, heat, req);
+}
+
+module.exports = { handleError, saveImage, validateSauceData };

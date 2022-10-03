@@ -13,7 +13,6 @@ module.exports = (req, res, next) => {
    try {
       if(!req.headers.authorization) {
          // If header authorization is missing return 401
-
          return res.status(401).json({
             error: 'Unauthorized'
          });
@@ -32,6 +31,8 @@ module.exports = (req, res, next) => {
                   error: 'Unauthorized request'
                });
             }
+
+            req.user = user;
 
             // Allow access if user is found
             next();

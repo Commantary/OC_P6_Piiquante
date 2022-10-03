@@ -6,9 +6,19 @@ const call = async (req, res, next) => {
       // Get sauce data
       let sauceData = JSON.parse(req.body.sauce);
 
+      const {name, manufacturer, description, mainPepper, heat} = sauceData;
+
+      if(utils.validateSauceData(res, name, manufacturer, description, mainPepper, heat, req))
+         return;
+
       // Save the sauce with model
       let sauce_ = new Sauce({
-         ...sauceData,
+         userId: req.user._id,
+         name,
+         manufacturer,
+         description,
+         mainPepper,
+         heat,
          imageUrl: utils.saveImage(req, req.files.image, sauceData.name) // Save the image and get the image url
       });
 
@@ -28,4 +38,4 @@ const call = async (req, res, next) => {
    }
 }
 
-module.exports = { call };
+module.exports = {call};

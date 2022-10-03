@@ -3,6 +3,7 @@ require("dotenv/config");
 
 const User = require('../models/user-schema');
 const jwt = require("jsonwebtoken");
+const { validationResult } = require('express-validator');
 
 /**
  * @description - This function is used to generate a token.

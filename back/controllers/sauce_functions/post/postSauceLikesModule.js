@@ -13,8 +13,23 @@ const call = async (req, res, next) => {
 
       let update = {};
 
+      if (!userId) {
+         return res.status(500).json({message: "User id is required"});
+      }
+
+      console.log("userId: ", userId, " -> user._id: ", req.user._id.toString());
+
+      if (userId !== req.user._id.toString()) {
+         return res.status(401).json({message: "Unauthorized"});
+      }
+
       switch (Number.parseInt(like)) {
          case 1:
+            // Check if the user already liked/disliked the sauce
+            if (dislikesArr.includes(userId) || likesArr.includes(userId)) {
+               return res.status(400).json({message: "You already liked/disliked this sauce"});
+            }
+
             // Add userId to likes array
             likesArr.push(userId);
 
@@ -35,6 +50,11 @@ const call = async (req, res, next) => {
             }
             break;
          case -1:
+            // Check if the user already liked/disliked the sauce
+            if (dislikesArr.includes(userId) || likesArr.includes(userId)) {
+               return res.status(400).json({message: "You already liked/disliked this sauce"});
+            }
+
             // Add userId to dislikes array
             dislikesArr.push(userId);
 
@@ -42,6 +62,9 @@ const call = async (req, res, next) => {
                dislikes: sauce.dislikes + 1,
                usersDisliked: dislikesArr
             }
+            break;
+         default:
+            return res.status(400).json({message: "Invalid like value"});
       }
 
       Sauce.findOneAndUpdate(filter, update, {new: true})
@@ -56,4 +79,4 @@ const call = async (req, res, next) => {
    }
 }
 
-module.exports = { call };
+module.exports = {call};

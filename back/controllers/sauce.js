@@ -32,7 +32,7 @@ const getSauceById = (req, res, next) => {
  * @param next Next
  */
 const createSauce = async (req, res, next) => {
-   createSauceModule.call(req, res, next);
+   await createSauceModule.call(req, res, next);
 }
 
 /**
